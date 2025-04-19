@@ -1,4 +1,6 @@
 const AdminModel = require('../models/admin.model');
+const AgentModel = require('../models/agent.model');
+const DeliveryModel = require('../models/delivery.model');
 const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -24,6 +26,17 @@ const loginAdmin = async (userData) => {
     return result;
 };
 
+const registerAgent = async (userData) => {
+    const result = await AgentModel.createAgent(userData);
+    return result;
+}
+
+const registerDeliveryBoy = async (userData) => {
+    const result = await DeliveryModel.createDeliveryBoy(userData);
+    return result;
+}
 module.exports = {
-    loginAdmin
+    loginAdmin,
+    registerAgent,
+    registerDeliveryBoy
 };

@@ -1,4 +1,5 @@
 const AdminService = require('../services/admin.service');
+const { registerUserSchema } = require('../validations/user.validation');
 
 const { loginAdminSchema } = require('../validations/admin.validation');
 
@@ -30,7 +31,70 @@ const getAdmin = async (req, res) => {
     return res.status(200).json({ message: 'Admin found', admin });
 }
 
+const registerAgent = async (req, res) => {
+    try {
+
+        if (req.admin.user.role_id !== 1) {
+            console.log(req.admin)
+            return res.status(403).json({ message: 'Access denied. Not an admin.' });
+        }
+
+        if (req.file) {
+            const identityProof = req.file.path;  // Save the file path
+        } else {
+            // Handle the case where the file is not uploaded
+            return res.status(400).json({ error: 'Identity proof is required.' });
+        }
+
+        // Validate the user data
+        const { error, value } = await registerUserSchema.validateAsync(req.body); // Await async validation
+        if (error) {
+            console.error(error);
+            return res.status(400).json({ error: error.details[0].message });
+        }
+
+        console.log(value);
+        const result = await AdminService.registerAgent({ ...req.body, identity_proof: req.file.path });
+        res.status(201).json({ message: 'Agent registered successfully', data: result });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+const registerDeliveryBoy = async (req, res) => {
+    try {
+
+        if (req.admin.user.role_id !== 1) {
+            console.log(req.admin)
+            return res.status(403).json({ message: 'Access denied. Not an admin.' });
+        }
+
+        if (req.file) {
+            const identityProof = req.file.path;  // Save the file path
+        } else {
+            // Handle the case where the file is not uploaded
+            return res.status(400).json({ error: 'Identity proof is required.' });
+        }
+
+        // Validate the user data
+        const { error, value } = await registerUserSchema.validateAsync(req.body); // Await async validation
+        if (error) {
+            console.error(error);
+            return res.status(400).json({ error: error.details[0].message });
+        }
+
+        const result = await AdminService.registerDeliveryBoy({ ...req.body, identity_proof: req.file.path });
+        res.status(201).json({ message: 'Delivery Boy registered successfully', data: result });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
 module.exports = {
     loginAdmin,
-    getAdmin
+    getAdmin,
+    registerAgent,
+    registerDeliveryBoy
 };
