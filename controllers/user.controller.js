@@ -1,5 +1,25 @@
 const UserService = require('../services/user.service');
 const { registerUserSchema } = require('../validations/user.validation'); // Correct import
+const { loginUserSchema } = require('../validations/user.validation');
+
+const loginUser = async (req, res) => {
+    try {
+        const { error, value } = await loginUserSchema.validateAsync(req.body);
+        if (error) {
+            console.error(error);
+            return res.status(400).json({ error: error.details[0].message });
+        }
+        const result = await UserService.loginUser(req.body);
+        if (result.status == true) {
+            return res.status(200).json({ message: result.message, token: result.token, expiresIn: result.expiresIn });
+        } else {
+            return res.status(401).json({ error: result.message });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+}
 
 const register = async (req, res) => {
     try {
@@ -27,5 +47,6 @@ const register = async (req, res) => {
 };
 
 module.exports = {
-    register
+    register,
+    loginUser
 };
