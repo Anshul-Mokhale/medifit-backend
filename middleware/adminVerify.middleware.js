@@ -3,6 +3,7 @@ const AdminModel = require('../models/admin.model');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+// this is a middleware function that verifies if the user is an admin
 const adminVerify = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;

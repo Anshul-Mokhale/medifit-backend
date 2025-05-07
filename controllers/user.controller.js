@@ -2,6 +2,7 @@ const UserService = require('../services/user.service');
 const { registerUserSchema } = require('../validations/user.validation'); // Correct import
 const { loginUserSchema } = require('../validations/user.validation');
 
+// this function handles user login
 const loginUser = async (req, res) => {
     try {
         const { error, value } = await loginUserSchema.validateAsync(req.body);
@@ -21,6 +22,7 @@ const loginUser = async (req, res) => {
     }
 }
 
+// this function handles user registration
 const register = async (req, res) => {
     try {
         if (req.file) {

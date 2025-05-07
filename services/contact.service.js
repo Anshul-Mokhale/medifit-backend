@@ -3,6 +3,7 @@ const ContactModel = require('../models/contact.model');
 const { contactSchema } = require('../validations/contact.validation');
 const { sendThankYouEmail } = require('../utils/mailer');
 
+// this is the function that will be used to process the contact request
 const ContactRequest = async (contactData) => {
     try {
         const { error } = contactSchema.validate(contactData);

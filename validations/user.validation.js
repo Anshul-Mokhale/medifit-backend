@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+// validation schema for user registration
 const registerUserSchema = Joi.object({
     name: Joi.string().min(3).max(50).required().messages({
         'string.empty': 'Name is required',
@@ -31,6 +32,7 @@ const registerUserSchema = Joi.object({
     }),
 });
 
+// validation schema for user login
 const loginUserSchema = Joi.object({
     email: Joi.string().email().required().messages({
         'string.email': 'Please enter a valid email',

@@ -1,5 +1,6 @@
 const contactService = require('../services/contact.service');
 
+// Controller function to handle contact requests
 const contactRequest = async (req, res) => {
     try {
         const result = await contactService.ContactRequest(req.body);

@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+// Validation schema for contact form
 const contactSchema = Joi.object({
     name: Joi.string().min(3).max(50).required().messages({
         'string.empty': 'Name is required',

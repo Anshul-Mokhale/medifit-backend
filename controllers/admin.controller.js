@@ -1,8 +1,8 @@
 const AdminService = require('../services/admin.service');
 const { registerUserSchema } = require('../validations/user.validation');
-
 const { loginAdminSchema } = require('../validations/admin.validation');
 
+// This function handles the login of an admin
 const loginAdmin = async (req, res) => {
     try {
         const { error, value } = await loginAdminSchema.validateAsync(req.body);
@@ -22,6 +22,7 @@ const loginAdmin = async (req, res) => {
     }
 }
 
+// This function retrieves the admin information
 const getAdmin = async (req, res) => {
     const admin = req.admin;
 
@@ -31,6 +32,7 @@ const getAdmin = async (req, res) => {
     return res.status(200).json({ message: 'Admin found', admin });
 }
 
+// This function handles the registration of an agent
 const registerAgent = async (req, res) => {
     try {
 
@@ -62,6 +64,7 @@ const registerAgent = async (req, res) => {
     }
 };
 
+// This function handles the registration of a deliveryboy
 const registerDeliveryBoy = async (req, res) => {
     try {
 

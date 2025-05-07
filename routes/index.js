@@ -1,16 +1,21 @@
 const express = require('express');
 const router = express.Router();
 
-const userRoutes = require('./user.routes'); // only if this file exists
+const userRoutes = require('./user.routes');
 const adminRoutes = require('./admin.routes');
 const contactRoutes = require('./contact.routes');
+const storeRoutes = require('./store.routes');
 
 router.get('/', (req, res) => {
     res.send('API is running...');
 });
-
-router.use('/users', userRoutes); // comment this out temporarily if user.routes.js has issues
+// including all the users routes
+router.use('/users', userRoutes);
+// including all the admin routes
 router.use('/admin', adminRoutes);
-router.use('/contact', contactRoutes)
+// includiing all contact routes
+router.use('/contact', contactRoutes);
+// including all the store routes
+router.use('/store', storeRoutes);
 
 module.exports = router;

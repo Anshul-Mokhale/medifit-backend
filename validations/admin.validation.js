@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+// Validation schema for admin login
 const loginAdminSchema = Joi.object({
     email: Joi.string().email().required().messages({
         'string.email': 'Please enter a valid email',
