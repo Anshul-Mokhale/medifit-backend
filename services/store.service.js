@@ -16,8 +16,15 @@ const getItemById = async (id) => {
     return result;
 }
 
+// This function searches for items in the store based on a search term
+const searchItem = async (search) => {
+    const result = await storeModel.searchItem(search);
+    return result;
+}
+
 module.exports = {
     getAllItems,
     getItemByCategory,
-    getItemById
+    getItemById,
+    searchItem
 }

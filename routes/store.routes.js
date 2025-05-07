@@ -8,5 +8,7 @@ router.get('/get-all-items', storeController.getAllItems);
 router.get('/get-items-by-category', storeController.getItemByCategory);
 // fetching the items by id from the items table in database
 router.get('/get-item-by-id', storeController.getItemById);
+// search item by any term
+router.get('/search-item', storeController.searchItem);
 
 module.exports = router;

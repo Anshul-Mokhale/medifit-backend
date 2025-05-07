@@ -56,9 +56,40 @@ const getItemById = async (id) => {
     }
 }
 
+// search items by any name it will give near by matches
+const searchItem = async (search) => {
+    try {
+        const sql = `SELECT 
+                items.item_name, 
+                items.company_name, 
+                items.sub_category, 
+                items.created_at, 
+                categories.category_name, 
+                items.item_image 
+            FROM items
+            JOIN categories ON items.category_id = categories.id
+            WHERE items.sub_category LIKE ?
+                OR categories.category_name LIKE ?
+                OR items.item_name LIKE ?
+                OR items.company_name LIKE ?
+    `;
+        const [rows] = await db.execute(sql, [`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`]);
+        if (rows.length === 0) {
+            return { status: false, message: 'No items found' };
+        }
+        else {
+            return { status: true, message: 'item found', items: rows }
+        }
+    } catch (err) {
+        console.error('Error searching items:', err);
+        throw new Error('Error searching items');
+    }
+}
+
 
 module.exports = {
     getAllItems,
     getItemsByCategory,
-    getItemById
+    getItemById,
+    searchItem
 }
